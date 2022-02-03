@@ -1,107 +1,200 @@
 import "./App.css";
-import { useState } from "react";
-
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 export default function App() {
-  const name = [
+  const user = [
     {
-      name: "Ratatouille",
-      image:
+      profile:
         "https://resizing.flixster.com/gL_JpWcD7sNHNYSwI1ff069Yyug=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzc4ZmJhZjZiLTEzNWMtNDIwOC1hYzU1LTgwZjE3ZjQzNTdiNy5qcGc=",
-      summary:
-        "Ratatouille is a 2007 American computer-animated comedy film produced by Pixar Animation Studios and released by Walt Disney Pictures. The eighth film produced by Pixar, it was written and directed by Brad Bird, who took over from Jan Pinkava in 2005, and produced by Brad Lewis, from an original idea from Bird, Pinkava and Jim Capobianco. The title refers to the French dish ratatouille, which is served at the end of the film, and also references the species of the main character, a rat. Set in Paris, the plot follows the rat named Remy, who dreams of becoming a chef and tries to achieve his goal by forming an alliance with a Parisian restaurant's garbage boy.",
-      rating: "8/10 IMDb",
+      name: "Ratatouille",
+      rating: "9.3",
+      description:
+        "Ratatouille is a 2007 American computer-animated comedy film produced by Pixar Animation Studios and released by Walt Disney Pictures. The eighth film produced by Pixar, it was written and directed by Brad Bird, who took over from Jan Pinkava in 2005, and produced by Brad Lewis, from an original idea from Bird, Pinkava and Jim Capobianco. The title refers to the French dish ratatouille, which is served at the end of the film, and also references the species of the main character, a rat. ",
     },
-
     {
-      name: "Frozen",
-      image:
+      profile:
         "https://lumiere-a.akamaihd.net/v1/images/p_frozen_18373_3131259c.jpeg?region=0%2C0%2C540%2C810",
-      summary:
+      name: "Frozen",
+      rating: "8",
+      description:
         "Frozen is a 2013 American computer-animated musical fantasy film produced by Walt Disney Animation Studios and released by Walt Disney Pictures.The 53rd Disney animated feature film, it is inspired by Hans Christian Andersen's fairy tale of The Snow Queen. The film depicts a princess who sets off on a journey alongside an iceman, his reindeer, and a snowman to find her estranged sister, whose icy powers have inadvertently trapped their kingdom in eternal winter.",
-      rating: "7.4/10 IMDb",
     },
-
     {
-      name: "Finding Nemo",
-      image:
+      profile:
         "https://2.bp.blogspot.com/-CGIKiw6Sbng/VpL1pY1tdQI/AAAAAAAAOcc/2W4IAxQ6MBI/s1600/finding%2Bnemo%2Bposter.jpg",
-      summary:
+      name: "Finding Nemo",
+      rating: "9.2",
+      description:
         "Finding Nemo is a 2003 American computer-animated adventure film produced by Pixar Animation Studios and released by Walt Disney Pictures. It tells the story of an overprotective clownfish named Marlin who, along with a regal blue tang named Dory, searches for his missing son Nemo. Along the way, Marlin learns to take risks and comes to terms with Nemo taking care of himself.",
-      rating: "8.1/10 IMDb",
     },
     {
-      name: "Despicable Me",
-      image:
+      profile:
         "https://static1.moviewebimages.com/wordpress/wp-content/uploads/movie/LoafGCYY52KVosa261df2t9KTFVCuF.jpg",
-      summary:
+      name: "Despicable Me",
+      rating: "9.0",
+      description:
         "A man who delights in all things wicked, supervillain Gru (Steve Carell) hatches a plan to steal the moon. Surrounded by an army of little yellow minions and his impenetrable arsenal of weapons and war machines, Gru makes ready to vanquish all who stand in his way. But nothing in his calculations and groundwork has prepared him for his greatest challenge: three adorable orphan girls (Miranda Cosgrove, Dana Gaier, Elsie Fisher) who want to make him their dad.",
-      rating: "7.6/10 IMDb",
     },
     {
+      profile: "https://m.media-amazon.com/images/I/51xlf28jbiL.jpg",
       name: "kung fu panda",
-      image: "https://m.media-amazon.com/images/I/51xlf28jbiL.jpg",
-      summary:
+      rating: "9.0",
+      description:
         "Kung Fu Panda is an American media franchise by DreamWorks Animation, consisting of three films: Kung Fu Panda (2008), Kung Fu Panda 2 (2011), and Kung Fu Panda 3 (2016). Po, a clumsy panda, is a kung fu fanatic who lives in the Valley of Peace and works in his goose father Mr. Ping's noodle shop, unable to realize his dream of learning the art of kung fu. One day, a kung fu tournament is held for the elderly spiritual leader of the valley, Grand Master Oogway, to determine the identity of the Dragon Warrior, the one kung fu master capable of understanding the secret of the Dragon Scroll",
-      rating: "8.1/10 IMDb",
     },
   ];
+  const [movies, setMovies] = useState(user);
+
+  const [movieName, setMovieName] = useState("");
+  const [moviePoster, setMoviePoster] = useState("");
+  const [movieRating, setMovieRating] = useState("");
+  const [movieDes, setMovieDes] = useState("");
+
+  const addMovie = () => {
+    const newMovie = {
+      name: movieName,
+      profile: moviePoster,
+      rating: movieRating,
+      description: movieDes,
+    };
+
+    setMovies([...movies, newMovie]);
+  };
   return (
     <div className="App">
-      <Title />
-      {name.map(({ name, image, summary, rating }) => (
-        <Name name={name} image={image} summary={summary} rating={rating} />
-      ))}
-      <Counter />
+      <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand text-center">Top 5 Animation Movies</span>
+        <form class="form-inline">
+          <input
+            class="form-control mr-sm-2"
+            type="Text"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <Button class="btn btn-outline-info" variant="contained">
+            Search
+          </Button>
+        </form>
+      </nav>
+
+      <div class="row">
+        {movies.map((nm, index) => (
+          <Movie
+            key={index}
+            name={nm.name}
+            profile={nm.profile}
+            rating={nm.rating}
+            description={nm.description}
+          />
+        ))}
+      </div>
+      <hr></hr>
+
+      <div class="content">
+        <p class="lead1"> Add movies by giving below details</p>
+      </div>
+
+      <div className="movie_form">
+        <TextField
+          onChange={(event) => setMoviePoster(event.target.value)}
+          label="Movie Poster URL"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieName(event.target.value)}
+          label="Movie Name"
+          variant="outlined"
+        />
+        <TextField
+          type="number"
+          onChange={(event) => setMovieRating(event.target.value)}
+          label="Movie Rating"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieDes(event.target.value)}
+          label="Movie Description"
+          variant="outlined"
+        />
+
+        <Button onClick={addMovie} variant="contained">
+          Add Movie
+        </Button>
+      </div>
     </div>
   );
 }
-function Title() {
+
+function Movie({ name, profile, rating, description }) {
+  // const styles = {
+  //   color : rating >8.5 ? "green" : "red",
+  // };
+  // const [show,setShow] = useState(true);
+  // const summaryStyles ={
+  //   display: show ? "block" : "none",
+  // };
+  const [showText, setShowText] = useState(false);
   return (
-    <div className="title">
-      <h1>Favourite Top 5 Animation Movies</h1>
-    </div>
-  );
-}
-function Name({ name, image, summary, rating }) {
-  return (
-    <div className="name">
-      <br></br>
-      <img src={image} width="300" alt="image1" />
-      <h3> MOVIE NAME: {name} 📽🎬</h3>
-      <h4>SUMMARY: {summary}</h4>
-      <h4>RATING: {rating}</h4>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+      <div class="col mb-4">
+        <div class="card">
+          <img src={profile} class="card-img-top img-fluid img" alt="IMG" />
+          <div class="card-body">
+            <h5 class="card-title text-center">{name}</h5>
+            <p class="card-text">
+              <span class="h5"> Rating : </span>{" "}
+              <span class="pfont"> ⭐{rating}</span>{" "}
+            </p>
+            <Button onClick={() => setShowText(!showText)} variant="contained">
+              Show More
+            </Button>
+            <p class="card-text" id="para">
+              <span class="h5"> </span>{" "}
+            </p>
+            <React.Fragment>
+              {/* {showText && (
+                <span class="pfont"> Description: {description}</span>
+              )} */}
+              {/* <p style={styles} classname ="description">{summary}</p> */}
+              {showText ? (
+                <span class="pfont"> Description: {description}</span>
+              ) : (
+                ""
+              )}
+            </React.Fragment>
+
+            <Counter />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function Counter() {
   const [like, setLike] = useState(0);
-  const [dislike, setDislike] = useState(0);
-  //const [state,setState] = useState(Initial value)
-  //State means current value
-  //setState helps to update state
+  const [unlike, setunLike] = useState(0);
   return (
-    <div className="counter">
-      <h3>Comment if you like or dislike this page. Thanks!!!😊😊</h3>
-      <button
-        onClick={() => {
-          //like++;
-          //console.log(like);
-          setLike(like + 1); // Informs react that like is updated
-        }}
-      >
-        Like
-      </button>
-      <h2>{like}👍</h2>
+    <div>
       <br></br>
-      <button
-        onClick={() => {
-          setDislike(dislike + 1); //
-        }}
+      <Button
+        type="button"
+        class="btn btn1 btn-outline-success"
+        onClick={() => setLike(like + 1)}
+        variant="outlined"
       >
-        Dislike
-      </button>
-      <h2>{dislike}👎</h2>
+        👍{like}
+      </Button>
+      <Button
+        type="button"
+        class="btn btn-outline-danger"
+        onClick={() => setunLike(unlike + 1)}
+        variant="outlined"
+      >
+        {" "}
+        👎{unlike}
+      </Button>
     </div>
   );
 }

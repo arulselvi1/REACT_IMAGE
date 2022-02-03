@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { Movie } from "./Movie";
 export default function App() {
   const user = [
     {
@@ -122,79 +123,6 @@ export default function App() {
           Add Movie
         </Button>
       </div>
-    </div>
-  );
-}
-
-function Movie({ name, profile, rating, description }) {
-  // const styles = {
-  //   color : rating >8.5 ? "green" : "red",
-  // };
-  // const [show,setShow] = useState(true);
-  // const summaryStyles ={
-  //   display: show ? "block" : "none",
-  // };
-  const [showText, setShowText] = useState(false);
-  return (
-    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
-      <div class="col mb-4">
-        <div class="card">
-          <img src={profile} class="card-img-top img-fluid img" alt="IMG" />
-          <div class="card-body">
-            <h5 class="card-title text-center">{name}</h5>
-            <p class="card-text">
-              <span class="h5"> Rating : </span>{" "}
-              <span class="pfont"> ⭐{rating}</span>{" "}
-            </p>
-            <Button onClick={() => setShowText(!showText)} variant="contained">
-              Show More
-            </Button>
-            <p class="card-text" id="para">
-              <span class="h5"> </span>{" "}
-            </p>
-            <React.Fragment>
-              {/* {showText && (
-                <span class="pfont"> Description: {description}</span>
-              )} */}
-              {/* <p style={styles} classname ="description">{summary}</p> */}
-              {showText ? (
-                <span class="pfont"> Description: {description}</span>
-              ) : (
-                ""
-              )}
-            </React.Fragment>
-
-            <Counter />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Counter() {
-  const [like, setLike] = useState(0);
-  const [unlike, setunLike] = useState(0);
-  return (
-    <div>
-      <br></br>
-      <Button
-        type="button"
-        class="btn btn1 btn-outline-success"
-        onClick={() => setLike(like + 1)}
-        variant="outlined"
-      >
-        👍{like}
-      </Button>
-      <Button
-        type="button"
-        class="btn btn-outline-danger"
-        onClick={() => setunLike(unlike + 1)}
-        variant="outlined"
-      >
-        {" "}
-        👎{unlike}
-      </Button>
     </div>
   );
 }

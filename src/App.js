@@ -199,7 +199,6 @@ export function Tictactoe() {
       }
       //return null;
     }
-
   };
 
   const winner = decideWinner(board);
@@ -224,7 +223,6 @@ export function Tictactoe() {
       {winner ? <Confetti width={width} height={height} /> : ""}
       <h2 className={"game-name"}>Tic - Tac - Toe</h2>
       <div className={"board"}>
-        
         {board.map((value, index) => (
           <GameBox
             value={value}
@@ -246,7 +244,6 @@ export function Tictactoe() {
 }
 
 const GameBox = ({ value, onPlayerClick }) => {
-  
   const styles = {};
   if (!!value) {
     // not undefined

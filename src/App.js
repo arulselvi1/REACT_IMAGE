@@ -2,13 +2,15 @@ import "./App.css";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Movie } from "./Movie";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { AddColor, ColorBox } from "./AddColor";
 import { Msg } from "./Msg";
-import Confetti from "react-confetti";
-import useWindowSize from "react-use/lib/useWindowSize";
-
+import { Tictactoe, GameBox } from "./Tictactoe";
+import { NotFound } from "./NotFound";
+import { MovieList } from "./MovieList";
+import { MovieDetails } from "./MovieDetails";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 export default function App() {
   const user = [
     {
@@ -53,21 +55,6 @@ export default function App() {
   ];
   const [movies, setMovies] = useState(user);
 
-  const [movieName, setMovieName] = useState("");
-  const [moviePoster, setMoviePoster] = useState("");
-  const [movieRating, setMovieRating] = useState("");
-  const [movieDes, setMovieDes] = useState("");
-
-  const addMovie = () => {
-    const newMovie = {
-      name: movieName,
-      profile: moviePoster,
-      rating: movieRating,
-      description: movieDes,
-    };
-
-    setMovies([...movies, newMovie]);
-  };
   return (
     <div className="App">
       <ul>
@@ -84,10 +71,32 @@ export default function App() {
         <li>
           <Link to="/tictactoe">Tic-Tac-Toe</Link>
         </li>
+        <li>
+          <Link to="/movies/add">Add Movies</Link>
+        </li>
+        <li>
+          <Link to="/movies/edit">Edit Movies</Link>
+        </li>
       </ul>
 
       <Switch>
         {/* Each route is case, eg. - case '/about': */}
+        <Route exact path="/">
+          <Msg />
+        </Route>
+        {/* //Redirect senario */}
+        <Route path="/films">
+          <Redirect to="/movies" />
+        </Route>
+        <Route path="/movies/add">
+          <AddMovieFunc movies={movies} setMovies={setMovies} />
+        </Route>
+        <Route path="/movies/edit">
+          <EditMovies movies={movies} setMovies={setMovies} />
+        </Route>
+        <Route path="/movies/:id">
+          <MovieDetails movies={movies} />
+        </Route>
         <Route path="/movies">
           {/* Match url display the below component */}
           <nav class="navbar navbar-dark bg-dark">
@@ -105,50 +114,8 @@ export default function App() {
             </form>
           </nav>
 
-          <div class="row">
-            {movies.map((nm, index) => (
-              <Movie
-                key={index}
-                name={nm.name}
-                profile={nm.profile}
-                rating={nm.rating}
-                description={nm.description}
-              />
-            ))}
-          </div>
+          <MovieList movies={movies} setMovies={setMovies} />
           <hr></hr>
-
-          <div class="content">
-            <p class="lead1"> Add movies by giving below details</p>
-          </div>
-
-          <div className="movie_form">
-            <TextField
-              onChange={(event) => setMoviePoster(event.target.value)}
-              label="Movie Poster URL"
-              variant="outlined"
-            />
-            <TextField
-              onChange={(event) => setMovieName(event.target.value)}
-              label="Movie Name"
-              variant="outlined"
-            />
-            <TextField
-              type="number"
-              onChange={(event) => setMovieRating(event.target.value)}
-              label="Movie Rating"
-              variant="outlined"
-            />
-            <TextField
-              onChange={(event) => setMovieDes(event.target.value)}
-              label="Movie Description"
-              variant="outlined"
-            />
-
-            <Button onClick={addMovie} variant="contained">
-              Add Movie
-            </Button>
-          </div>
         </Route>
         <Route path="/color-game">
           <AddColor />
@@ -158,100 +125,128 @@ export default function App() {
           <Tictactoe />
           <GameBox />
         </Route>
-        <Route path="/">
-          <Msg />
+        <Route path="**">
+          <NotFound />
         </Route>
       </Switch>
     </div>
   );
 }
 
-export function Tictactoe() {
-  const [board, setBoard] = useState([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
-  const { width, height } = useWindowSize();
-  const decideWinner = (board) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
+function AddMovieFunc({ movies, setMovies }) {
+  const [movieName, setMovieName] = useState("");
+  const [moviePoster, setMoviePoster] = useState("");
+  const [movieRating, setMovieRating] = useState("");
+  const [movieDes, setMovieDes] = useState("");
+  const [movieTrailer, setMovieTrailer] = useState("");
+  const history = useHistory();
 
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (board[a] !== null && board[a] === board[b] && board[a] === board[c]) {
-        console.log("Winner", board[a]);
-        return board[a];
-      }
-      //return null;
-    }
+  const addMovie = () => {
+    const newMovie = {
+      name: movieName,
+      profile: moviePoster,
+      rating: movieRating,
+      description: movieDes,
+      trailer: movieTrailer,
+    };
+
+    setMovies([...movies, newMovie]);
+    history.push("/movies");
   };
-
-  const winner = decideWinner(board);
-  const [isXTurn, setIsXTurn] = useState(true);
-  const handelClick = (index) => {
-    console.log(index);
-    const boardCopy = [...board];
-    if (!winner && !board[index]) {
-      boardCopy[index] = isXTurn ? "X" : "O";
-      setIsXTurn(!isXTurn);
-      setBoard(boardCopy);
-    }
-  };
-
-  const reset = () => {
-    setBoard([null, null, null, null, null, null, null, null, null]);
-    setIsXTurn(true);
-  };
-
   return (
-    <>
-      {winner ? <Confetti width={width} height={height} /> : ""}
-      <h2 className={"game-name"}>Tic - Tac - Toe</h2>
-      <div className={"board"}>
-        {board.map((value, index) => (
-          <GameBox
-            value={value}
-            key={index}
-            onPlayerClick={() => handelClick(index)}
-          />
-        ))}
-      </div>
-      <div className={"game-message"}>
-        <Button variant="contained" color="secondary" onClick={reset}>
-          Restart the game
-        </Button>
+    <div class="content">
+      <p class="lead1"> Add movies by giving below details</p>
 
-        <p>{winner ? "The Winner is: " + winner : ""}</p>
-        <p>{!winner ? `The Player ${isXTurn ? "X" : "O"} has to play` : ""}</p>
+      <div className="movie_form">
+        <TextField
+          onChange={(event) => setMoviePoster(event.target.value)}
+          label="Movie Poster URL"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieName(event.target.value)}
+          label="Movie Name"
+          variant="outlined"
+        />
+        <TextField
+          type="number"
+          onChange={(event) => setMovieRating(event.target.value)}
+          label="Movie Rating"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieDes(event.target.value)}
+          label="Movie Description"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieTrailer(event.target.value)}
+          label="Movie Trailer URL"
+          variant="outlined"
+        />
+        <Button onClick={addMovie} variant="contained">
+          Add Movie
+        </Button>
       </div>
-    </>
+    </div>
   );
 }
 
-const GameBox = ({ value, onPlayerClick }) => {
-  const styles = {};
-  if (!!value) {
-    // not undefined
-    styles.color = value === "X" ? "green" : "red";
-  }
+function EditMovies({ movies, setMovies }) {
+  const [movieName, setMovieName] = useState("");
+  const [moviePoster, setMoviePoster] = useState("");
+  const [movieRating, setMovieRating] = useState("");
+  const [movieDes, setMovieDes] = useState("");
+  const [movieTrailer, setMovieTrailer] = useState("");
+  const history = useHistory();
+
+  const editMovie = () => {
+    const newMovie = {
+      name: movieName,
+      profile: moviePoster,
+      rating: movieRating,
+      description: movieDes,
+      trailer: movieTrailer,
+    };
+
+    setMovies([...movies, newMovie]);
+    history.push("/movies/edit");
+  };
   return (
-    <div className="game-box" onClick={onPlayerClick} style={styles}>
-      {value}
+    <div class="content">
+      <p class="lead1"> Edit Movie Details</p>
+
+      <div className="movie_form">
+        <TextField
+          onChange={(event) => setMoviePoster(event.target.value)}
+          label="Movie Poster URL"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieName(event.target.value)}
+          label="Movie Name"
+          variant="outlined"
+        />
+        <TextField
+          type="number"
+          onChange={(event) => setMovieRating(event.target.value)}
+          label="Movie Rating"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieDes(event.target.value)}
+          label="Movie Description"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(event) => setMovieTrailer(event.target.value)}
+          label="Movie Trailer URL"
+          variant="outlined"
+        />
+        <Button onClick={editMovie} variant="contained">
+          Edit Movie
+        </Button>
+      </div>
     </div>
   );
-};
+}

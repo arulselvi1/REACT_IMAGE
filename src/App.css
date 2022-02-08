@@ -183,3 +183,10 @@ body {
 .game-box:nth-child(6) {
   border-right: none;
 }
+.not-found {
+  text-align: center;
+}
+.movie-detail-container {
+  max-width: 900px;
+  padding: 24px;
+}

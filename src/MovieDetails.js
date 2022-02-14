@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 export function MovieDetails({ movies }) {
   const { id } = useParams();
   console.log(id, movies);
@@ -22,10 +23,12 @@ export function MovieDetails({ movies }) {
       ></iframe>
       <div className="movie-detail-container">
         <div className="movie-specs">
-          <h3 className="movie-name">{movienew.name}</h3>
+          <h2 className="movie-name">{movienew.name}</h2>
+
           <p className="movie-rating">⭐{movienew.rating}</p>
         </div>
         <p className="movie-summary">{movienew.description}</p>
+
         <Button
           variant="outlined"
           onClick={() => history.goBack()}

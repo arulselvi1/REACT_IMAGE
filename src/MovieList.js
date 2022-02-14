@@ -17,6 +17,7 @@ export function MovieList({ movies, setMovies }) {
           description={nm.description}
           deletebutton={
             <IconButton
+              style={{ marginLeft: "auto" }}
               onClick={() => {
                 console.log(index);
                 const copyMovieList = [...movies];
@@ -31,7 +32,7 @@ export function MovieList({ movies, setMovies }) {
           }
           editbutton={
             <IconButton
-              onClick={() => history.push(`/movies/edit`)}
+              onClick={() => history.push(`/movies/edit/${index}`)}
               aria-label="edit"
               color="secondary"
             >

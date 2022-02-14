@@ -24,6 +24,7 @@ export function Movie({
   // };
   const [showText, setShowText] = useState(false);
   const history = useHistory();
+
   return (
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
       <div class="col mb-4">

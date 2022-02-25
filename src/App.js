@@ -16,11 +16,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { BasicForm } from "./BasicForm";
 export default function App() {
   const user = [
     {
       id: "100",
-      profile:
+      poster:
         "https://resizing.flixster.com/gL_JpWcD7sNHNYSwI1ff069Yyug=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzc4ZmJhZjZiLTEzNWMtNDIwOC1hYzU1LTgwZjE3ZjQzNTdiNy5qcGc=",
       name: "Ratatouille",
       rating: 9.3,
@@ -30,7 +31,7 @@ export default function App() {
     },
     {
       id: "101",
-      profile:
+      poster:
         "https://lumiere-a.akamaihd.net/v1/images/p_frozen_18373_3131259c.jpeg?region=0%2C0%2C540%2C810",
       name: "Frozen",
       rating: 8,
@@ -40,7 +41,7 @@ export default function App() {
     },
     {
       id: "102",
-      profile:
+      poster:
         "https://2.bp.blogspot.com/-CGIKiw6Sbng/VpL1pY1tdQI/AAAAAAAAOcc/2W4IAxQ6MBI/s1600/finding%2Bnemo%2Bposter.jpg",
       name: "Finding Nemo",
       rating: 9.2,
@@ -50,7 +51,7 @@ export default function App() {
     },
     {
       id: "103",
-      profile:
+      poster:
         "https://static1.moviewebimages.com/wordpress/wp-content/uploads/movie/LoafGCYY52KVosa261df2t9KTFVCuF.jpg",
       name: "Despicable Me",
       rating: 9.0,
@@ -60,7 +61,7 @@ export default function App() {
     },
     {
       id: "104",
-      profile: "https://m.media-amazon.com/images/I/51xlf28jbiL.jpg",
+      poster: "https://m.media-amazon.com/images/I/51xlf28jbiL.jpg",
       name: "kung fu panda",
       rating: 9.0,
       description:
@@ -124,19 +125,20 @@ export default function App() {
             {/* Each route is case, eg. - case '/about': */}
             <Route exact path="/">
               <Msg />
+              <BasicForm />
             </Route>
             {/* //Redirect senario */}
             <Route path="/films">
               <Redirect to="/movies" />
             </Route>
             <Route path="/movies/add">
-              <AddMovieFunc movies={movies} setMovies={setMovies} />
+              <AddMovieFunc />
             </Route>
             <Route path="/movies/edit/:id">
-              <EditMovies movies={movies} setMovies={setMovies} />
+              <EditMovies />
             </Route>
             <Route path="/movies/:id">
-              <MovieDetails movies={movies} />
+              <MovieDetails />
             </Route>
             <Route path="/movies">
               {/* Match url display the below component */}
@@ -157,7 +159,7 @@ export default function App() {
                 </form>
               </nav>
 
-              <MovieList movies={movies} setMovies={setMovies} />
+              <MovieList />
               <hr></hr>
             </Route>
             <Route path="/color-game">

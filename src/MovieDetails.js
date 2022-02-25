@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
-export function MovieDetails({ movies }) {
+import { API } from "./global";
+export function MovieDetails() {
   const { id } = useParams();
-  console.log(id, movies);
+  // console.log(id, movies);
   const history = useHistory();
+  const [movienew, setMovienew] = useState({});
+  useEffect(() => {
+    fetch(`${API}/movies/${id}`, {
+      method: "GET",
+    }) // promise
+      .then((data) => data.json()) // Response object
+      .then((mvs) => setMovienew(mvs));
+  }, []);
 
-  const movienew = movies[id];
   return (
     <div>
       <iframe

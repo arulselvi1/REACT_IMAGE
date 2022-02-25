@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export function Movie({
   name,
-  profile,
+  poster,
   rating,
   description,
   deletebutton,
@@ -29,7 +29,7 @@ export function Movie({
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
       <div class="col mb-4">
         <div class="card">
-          <img src={profile} class="card-img-top img-fluid img" alt="IMG" />
+          <img src={poster} class="card-img-top img-fluid img" alt="IMG" />
           <div class="card-body">
             <h5 class="card-title text-center">{name}</h5>
             <IconButton

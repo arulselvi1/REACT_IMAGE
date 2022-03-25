@@ -14,6 +14,7 @@ export function Movie({
   deletebutton,
   editbutton,
   id,
+  _id,
 }) {
   // const styles = {
   //   color : rating >8.5 ? "green" : "red",

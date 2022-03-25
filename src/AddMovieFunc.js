@@ -61,7 +61,7 @@ export function AddMovieFunc() {
 
     fetch(`${API}/movies/`, {
       method: "POST",
-      body: JSON.stringify(newMovie),
+      body: JSON.stringify([newMovie]),
       headers: {
         "Content-Type": "application/json",
       },

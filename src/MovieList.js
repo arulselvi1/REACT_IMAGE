@@ -30,7 +30,8 @@ export function MovieList() {
     <div class="row">
       {moviesList.map((nm, index) => (
         <Movie
-          key={index}
+          //key = {index}
+          key={nm._id}
           name={nm.name}
           poster={nm.poster}
           rating={nm.rating}
@@ -38,7 +39,7 @@ export function MovieList() {
           deletebutton={
             <IconButton
               style={{ marginLeft: "auto" }}
-              onClick={() => deleteMovie(nm.id)}
+              onClick={() => deleteMovie(nm._id)}
               aria-label="delete"
               color="error"
             >
@@ -47,14 +48,14 @@ export function MovieList() {
           }
           editbutton={
             <IconButton
-              onClick={() => history.push(`/movies/edit/${nm.id}`)}
+              onClick={() => history.push(`/movies/edit/${nm._id}`)}
               aria-label="edit"
               color="secondary"
             >
               <EditIcon />
             </IconButton>
           }
-          id={nm.id}
+          id={nm._id}
         />
       ))}
     </div>
